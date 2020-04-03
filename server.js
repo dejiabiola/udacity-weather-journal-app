@@ -37,12 +37,21 @@ function listening() {
 
 
 
-//  respond with .send whenever there is a get request to index page
-app.get('/', function(req, res) {
-  res.send("<h1>Coronavirus! Everybody sanitize!</h1>")
+//  send the project data whenever a get request to '/all' is made
+app.get('/all', function(req, res) {
+  res.send(projectData);
+  // console.log(projectData);
 })
 
 //Handle post requests to /
-app.post('/', function(req,res) {
-  res.send('POST received')
-})
+app.post('/add', function(req, res) {
+  projectData.temperature = req.body.temp;
+  projectData.date = req.body.date;
+  projectData.userResponse = req.body.userResponse;
+  projectData.description = req.body.description;
+  projectData.name = req.body.name;
+  console.log(projectData)
+  res.send(projectData)
+});
+
+ 
