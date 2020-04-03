@@ -15,4 +15,4 @@ Finally, it is sent to the browser and displayed in the user interface.
 
 2. Run `npm start` in the command prompt.
 
-3. visit the index.html file on your browser
+3. visit the `localhost:8000` file on your browser
