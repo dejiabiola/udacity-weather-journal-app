@@ -40,7 +40,6 @@ function listening() {
 //  send the project data whenever a get request to '/all' is made
 app.get('/all', function(req, res) {
   res.send(projectData);
-  // console.log(projectData);
 })
 
 //Handle post requests to /

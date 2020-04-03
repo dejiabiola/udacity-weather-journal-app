@@ -1,7 +1,7 @@
 /* Global Variables */
 
 // Create a new date instance dynamically with JS
-let baseURL = "http://api.openweathermap.org/data/2.5/weather?zip=";
+const baseURL = "http://api.openweathermap.org/data/2.5/weather?zip=";
 
 const apiKey = "&appid=1c99b7dbe2469eebf9caea877d515b0a";
 
@@ -22,6 +22,10 @@ const getWeatherData = async function(baseURL, apiKey, zipCode) {
   try {
     const weatherObject = await response.json();
     console.log(weatherObject);
+    if (weatherObject.cod === '404') {
+      errorDisplay('status code error');
+      return; 
+    }
     return weatherObject;
   } catch(error) {
     console.log("error", error);
@@ -47,9 +51,29 @@ const postData = async function(url = '', data = {}) {
   }
 }
 
+// Check for errors and displays them in the error box
+function errorDisplay(error) {
+  const ErrorDiv = document.getElementById('error-container');
+  if (error === 'empty input box') {
+    ErrorDiv.innerHTML = "<p id='error-text'>You have not entered a zip code</p>";
+  } else if (error === 'status code error') {
+    ErrorDiv.innerHTML = "<p id='error-text'>You have entered an invalid zip code</p>";
+  }
+  ErrorDiv.style.visibility = "visible";
+}
+
+
 function clickHandler() {
   const userResponse = document.getElementById('feelings').value;
   const zipCode = document.getElementById('zip').value;
+
+  if (!zipCode) {
+    errorDisplay('empty input box');
+    return;
+  } else {
+    const ErrorDiv = document.getElementById('error-container');
+    ErrorDiv.style.visibility = "hidden";
+  }
   
   getWeatherData(baseURL, apiKey, zipCode).then(function(data) {
     postData('/add', {
