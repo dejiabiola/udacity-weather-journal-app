@@ -6,11 +6,11 @@ const baseURL = "http://api.openweathermap.org/data/2.5/weather?zip=";
 const apiKey = "&appid=1c99b7dbe2469eebf9caea877d515b0a";
 
 let d = new Date();
-let newDate = d.getMonth()+' '+ getMonth(d.getDate())+' '+ d.getFullYear();
+let newDate = d.getDate()+' '+ getMonth(d.getMonth())+' '+ d.getFullYear();
 
 function getMonth(month) {
   const monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  return monthArray[month - 1];
+  return monthArray[month];
 }
 
 
