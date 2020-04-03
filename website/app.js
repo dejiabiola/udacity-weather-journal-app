@@ -47,8 +47,21 @@ const postData = async function(url = '', data = {}) {
   }
 }
 
-function formatDate() {
-
+function clickHandler() {
+  const userResponse = document.getElementById('feelings').value;
+  const zipCode = document.getElementById('zip').value;
+  
+  getWeatherData(baseURL, apiKey, zipCode).then(function(data) {
+    postData('/add', {
+      'temp': data.main.temp,
+      'date': newDate,
+      'userResponse': userResponse,
+      'name': data.name,
+      'description': data.weather[0].description
+    })
+  }).then(function(data) {
+    updateUi();
+  })
 }
 
 // Update UI with values in the weather data object from the backend node server
@@ -70,19 +83,4 @@ const updateUi = async function() {
 }
 
 // Click Event listener will call the get function once user clicks on generate button 
-document.getElementById('generate').addEventListener('click', function() {
-  const userResponse = document.getElementById('feelings').value;
-  const zipCode = document.getElementById('zip').value;
-  
-  getWeatherData(baseURL, apiKey, zipCode).then(function(data) {
-    postData('/add', {
-      'temp': data.main.temp,
-      'date': newDate,
-      'userResponse': userResponse,
-      'name': data.name,
-      'description': data.weather[0].description
-    })
-  }).then(function(data) {
-    updateUi();
-  })
-})
+document.getElementById('generate').addEventListener('click', clickHandler)
